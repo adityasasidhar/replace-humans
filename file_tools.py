@@ -1,5 +1,125 @@
 import os
 
+
+FILE_TOOLS = {
+    "create_file": {
+        "name": "create_file",
+        "description": "Create a new file at the specified path.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The path where the file should be created."}
+            },
+            "required": ["path"]
+        }
+    },
+    "create_directory": {
+        "name": "create_directory",
+        "description": "Create a new directory at the specified path.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The path where the directory should be created."}
+            },
+            "required": ["path"]
+        }
+    },
+    "delete_file": {
+        "name": "delete_file",
+        "description": "Delete a file at the specified path.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The path of the file to delete."}
+            },
+            "required": ["path"]
+        }
+    },
+    "does_file_exist": {
+        "name": "does_file_exist",
+        "description": "Check if a file exists at the specified path.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The path of the file to check."}
+            },
+            "required": ["path"]
+        }
+    },
+    "get_directory_tree": {
+        "name": "get_directory_tree",
+        "description": "Return the tree structure of a directory, including hidden files.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The directory path to get the tree structure for."},
+                "prefix": {"type": "string", "description": "Prefix for formatting the tree structure.", "default": ""}
+            },
+            "required": ["path"]
+        }
+    },
+    "read_file": {
+        "name": "read_file",
+        "description": "Read the content of a file.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The path of the file to read."}
+            },
+            "required": ["path"]
+        }
+    },
+    "write_file": {
+        "name": "write_file",
+        "description": "Write content to a file.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The path of the file to write to."},
+                "content": {"type": "string", "description": "The content to write to the file."}
+            },
+            "required": ["path", "content"]
+        }
+    },
+    "append_to_file": {
+        "name": "append_to_file",
+        "description": "Append content to a file.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The path of the file to append to."},
+                "content": {"type": "string", "description": "The content to append to the file."}
+            },
+            "required": ["path", "content"]
+        }
+    },
+    "copy_file": {
+        "name": "copy_file",
+        "description": "Copy a file from source to destination.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "src": {"type": "string", "description": "The source file path."},
+                "dst": {"type": "string", "description": "The destination file path."}
+            },
+            "required": ["src", "dst"]
+        }
+    },
+    "move_file": {
+        "name": "move_file",
+        "description": "Move a file from source to destination.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "src": {"type": "string", "description": "The source file path."},
+                "dst": {"type": "string", "description": "The destination file path."}
+            },
+            "required": ["src", "dst"]
+        }
+    }
+}
+
+
 def create_file(path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     print(f"File created at {path}")
@@ -144,122 +264,3 @@ def move_file(src, dst):
 
     os.rename(src, dst)
     print(f"File moved from {src} to {dst}")
-
-
-FILE_TOOLS = {
-    "create_file": {
-        "name": "create_file",
-        "description": "Create a new file at the specified path.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The path where the file should be created."}
-            },
-            "required": ["path"]
-        }
-    },
-    "create_directory": {
-        "name": "create_directory",
-        "description": "Create a new directory at the specified path.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The path where the directory should be created."}
-            },
-            "required": ["path"]
-        }
-    },
-    "delete_file": {
-        "name": "delete_file",
-        "description": "Delete a file at the specified path.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The path of the file to delete."}
-            },
-            "required": ["path"]
-        }
-    },
-    "does_file_exist": {
-        "name": "does_file_exist",
-        "description": "Check if a file exists at the specified path.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The path of the file to check."}
-            },
-            "required": ["path"]
-        }
-    },
-    "get_directory_tree": {
-        "name": "get_directory_tree",
-        "description": "Return the tree structure of a directory, including hidden files.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The directory path to get the tree structure for."},
-                "prefix": {"type": "string", "description": "Prefix for formatting the tree structure.", "default": ""}
-            },
-            "required": ["path"]
-        }
-    },
-    "read_file": {
-        "name": "read_file",
-        "description": "Read the content of a file.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The path of the file to read."}
-            },
-            "required": ["path"]
-        }
-    },
-    "write_file": {
-        "name": "write_file",
-        "description": "Write content to a file.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The path of the file to write to."},
-                "content": {"type": "string", "description": "The content to write to the file."}
-            },
-            "required": ["path", "content"]
-        }
-    },
-    "append_to_file": {
-        "name": "append_to_file",
-        "description": "Append content to a file.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The path of the file to append to."},
-                "content": {"type": "string", "description": "The content to append to the file."}
-            },
-            "required": ["path", "content"]
-        }
-    },
-    "copy_file": {
-        "name": "copy_file",
-        "description": "Copy a file from source to destination.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "src": {"type": "string", "description": "The source file path."},
-                "dst": {"type": "string", "description": "The destination file path."}
-            },
-            "required": ["src", "dst"]
-        }
-    },
-    "move_file": {
-        "name": "move_file",
-        "description": "Move a file from source to destination.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "src": {"type": "string", "description": "The source file path."},
-                "dst": {"type": "string", "description": "The destination file path."}
-            },
-            "required": ["src", "dst"]
-        }
-    }
-}

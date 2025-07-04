@@ -4,6 +4,62 @@ from PIL import Image
 from google import genai
 from google.genai import types
 
+IMAGE_TOOLS = {
+    "open_an_image": {
+        "name": "open_an_image",
+        "description": "Open and read an image file, returning the binary data.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string", "description": "The file path to the image."}
+            },
+            "required": ["path"]
+        }
+    },
+    "move_the_image": {
+        "name": "move_the_image",
+        "description": "Move an image file from one location to another.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path_before": {"type": "string", "description": "The current file path of the image."},
+                "path_after": {"type": "string", "description": "The new file path where the image should be moved."}
+            },
+            "required": ["path_before", "path_after"]
+        }
+    },
+    "generate_image": {
+        "name": "generate_image",
+        "description": "Generate an image from a text prompt using the Gemini API.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "prompt": {"type": "string", "description": "The text prompt to generate the image from."},
+                "dimensions": {"type": "string", "description": "The desired dimensions for the generated image (e.g., '512x512')."},
+                "path": {"type": "string", "description": "The directory path to save the image. If None or empty, saves to the current working directory."},
+                "name_of_image": {"type": "string", "description": "The name to use for the saved image file (without extension)."}
+            },
+            "required": ["prompt", "dimensions", "path", "name_of_image"]
+        }
+    },
+    "modify_image": {
+        "name": "modify_image",
+        "description": "Modify an existing image based on a text prompt using the Gemini API.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "path_of_the_image_to_modify": {"type": "string", "description": "Path to the image file to be modified."},
+                "path_to_save_the_image": {"type": "string", "description": "Directory path to save the modified image. If None or empty, saves to the current working directory."},
+                "prompt": {"type": "string", "description": "The text prompt describing the modification to apply."},
+                "name_of_image": {"type": "string", "description": "The name to use for the saved modified image file (without extension)."},
+                "dimensional_preference": {"type": "string", "description": "Additional dimensional preferences for the modification (e.g., '512x512')."}
+            },
+            "required": ["path_of_the_image_to_modify", "path_to_save_the_image", "prompt", "name_of_image", "dimensional_preference"]
+        }
+    }
+}
+
+
 def open_an_image(path):
 
     """Open and read an image file.
@@ -276,59 +332,3 @@ def modify_image(path_of_the_image_to_modify, path_to_save_the_image, prompt, na
 
             image.save(save_path)
             print(f"Image {name_of_image} saved to {save_path}")
-
-# IMAGE_TOOLS schema dictionary
-IMAGE_TOOLS = {
-    "open_an_image": {
-        "name": "open_an_image",
-        "description": "Open and read an image file, returning the binary data.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "The file path to the image."}
-            },
-            "required": ["path"]
-        }
-    },
-    "move_the_image": {
-        "name": "move_the_image",
-        "description": "Move an image file from one location to another.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path_before": {"type": "string", "description": "The current file path of the image."},
-                "path_after": {"type": "string", "description": "The new file path where the image should be moved."}
-            },
-            "required": ["path_before", "path_after"]
-        }
-    },
-    "generate_image": {
-        "name": "generate_image",
-        "description": "Generate an image from a text prompt using the Gemini API.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "prompt": {"type": "string", "description": "The text prompt to generate the image from."},
-                "dimensions": {"type": "string", "description": "The desired dimensions for the generated image (e.g., '512x512')."},
-                "path": {"type": "string", "description": "The directory path to save the image. If None or empty, saves to the current working directory."},
-                "name_of_image": {"type": "string", "description": "The name to use for the saved image file (without extension)."}
-            },
-            "required": ["prompt", "dimensions", "path", "name_of_image"]
-        }
-    },
-    "modify_image": {
-        "name": "modify_image",
-        "description": "Modify an existing image based on a text prompt using the Gemini API.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path_of_the_image_to_modify": {"type": "string", "description": "Path to the image file to be modified."},
-                "path_to_save_the_image": {"type": "string", "description": "Directory path to save the modified image. If None or empty, saves to the current working directory."},
-                "prompt": {"type": "string", "description": "The text prompt describing the modification to apply."},
-                "name_of_image": {"type": "string", "description": "The name to use for the saved modified image file (without extension)."},
-                "dimensional_preference": {"type": "string", "description": "Additional dimensional preferences for the modification (e.g., '512x512')."}
-            },
-            "required": ["path_of_the_image_to_modify", "path_to_save_the_image", "prompt", "name_of_image", "dimensional_preference"]
-        }
-    }
-}
